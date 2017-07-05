@@ -1,0 +1,5 @@
+####
+url::requestPoiNodes
+param::uuid $$ --
+data::[{"nodeId":"node1","point":{"x":106.72,"y":29.50,"z":0},"nodeType":1},{"nodeId":"node2","point":{"x":106.74,"y":29.51,"z":0},"nodeType":2},{"nodeId":"node3","point":{"x":106.72,"y":29.51,"z":0},"nodeType":2},{"nodeId":"node4","point":{"x":106.74,"y":49.51,"z":0},"nodeType":1},{"nodeId":"node5","point":{"x":106.74,"y":25.51,"z":0},"nodeType":2},{"nodeId":"node6","point":{"x":105.74,"y":29.51,"z":0},"nodeType":1}]
+####

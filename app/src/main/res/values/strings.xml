@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SpMapbox</string>
+    <string name="txt_choose_file">Choose File</string>
+    <string name="txt_sinpals_name">singPals\n可视化资源系统</string>
+    <string name="txt_phone_number">手机号码</string>
+    <string name="txt_password">密 码</string>
+    <string name="txt_login">登录</string>
+    <string name="txt_forget_psw">忘记密码?</string>
+    <string name="txt_understand_sinpals">了解sinpals</string>
+</resources>
