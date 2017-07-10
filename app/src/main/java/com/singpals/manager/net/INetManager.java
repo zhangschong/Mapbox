@@ -30,17 +30,11 @@ public interface INetManager extends IManager {
 
     class Factory {
 
-        private static INetManager sNetManager;
-
-        public static void init(Context context) {
+        public static INetManager createMockReq(Context context){
             FileMockRequester requester = new FileMockRequester();
             requester.setFileSource(FileSource.Factory.createAssetSource(context, "mock.req"));
             requester.init();
-            sNetManager = DataNetBuilder.newDataNet(INetManager.class, requester);
-        }
-
-        public static INetManager getNetManager(){
-            return sNetManager;
+            return DataNetBuilder.newDataNet(INetManager.class, requester);
         }
     }
 

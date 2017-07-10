@@ -9,8 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.mapbox.services.commons.utils.TextUtils;
+import com.singpals.manager.gaea.GaeaManager;
+import com.singpals.manager.gaea.IUserManager;
 import com.singpals.manager.net.data.UserData;
-import com.singpals.manager.user.UserManager;
 import com.singpals.mapbox.map.MapActivity;
 
 /**
@@ -19,7 +20,7 @@ import com.singpals.mapbox.map.MapActivity;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> {
 
-    private UserManager mUserManager = UserManager.getUserManager();
+    private IUserManager mUserManager = GaeaManager.getGaeaManager().getProxyInstance(IUserManager.class);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
 
 }
 
-class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> implements UserManager.OnUserManagerWatcher {
+class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> implements IUserManager.OnUserManagerWatcher {
 
     @Override
     protected void onActivityCreated(LoginActivity activity, Bundle savedInstanceState) {

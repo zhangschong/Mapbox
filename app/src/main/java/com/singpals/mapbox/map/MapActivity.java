@@ -22,6 +22,9 @@ import com.mapbox.services.android.telemetry.MapboxEvent;
 import com.mapbox.services.android.telemetry.MapboxTelemetry;
 import com.mapbox.services.android.telemetry.utils.TelemetryUtils;
 import com.mapbox.services.commons.geojson.Feature;
+import com.singpals.manager.gaea.GaeaItemCb;
+import com.singpals.manager.gaea.GaeaManager;
+import com.singpals.manager.gaea.IPoiNodeManager;
 import com.singpals.manager.icon.IconManager;
 import com.singpals.manager.net.PoiNodeLayer;
 import com.singpals.manager.net.data.PoiNode;
@@ -87,14 +90,16 @@ public class MapActivity extends BaseMapActivity<MapActPresenter> {
     }
 }
 
-class MapActPresenter extends BaseMapActPresenter<MapActivity> implements IHttpRequester.Callback {
+class MapActPresenter extends BaseMapActPresenter<MapActivity> {
     private MapBoxHelper mMapBoxHelper;
     private IconManager mIconManager;
+    private IPoiNodeManager mPoiManager;
 
     @Override
     protected void onActivityCreated(MapActivity activity, Bundle savedInstanceState) {
         activity.setContentView(R.layout.map_layout);
         setMapView((MapView) findViewById(R.id.mapView), savedInstanceState);
+        mPoiManager = GaeaManager.getGaeaManager().getProxyInstance(IPoiNodeManager.class);
     }
 
     @Override
@@ -106,24 +111,18 @@ class MapActPresenter extends BaseMapActPresenter<MapActivity> implements IHttpR
         mMapBoxHelper.init();
 
         mMapBoxHelper.cameraTo(29.50, 106.72, 10, 5000);
-        mNetManager.requestPoiNodes(this, "testUuid");
+        mPoiManager.requestPoiNodes().observer(new GaeaItemCb.Observer<List<PoiNode>>() {
+            @Override
+            public void onDataUpdated(List<PoiNode> data) {
+                mMapBoxHelper.addChild(PoiNodeLayer.createPoiNodeLayer("PoiNodes", data));
+            }
+        });
     }
 
     final void addSourceFile(Uri filePath) {
         FileSource source = FileSource.Factory.createFileSource(mActivity, filePath);
         SpKmlLayer layer = new SpKmlLayer(filePath.getPath(), source);
         mMapBoxHelper.addChild(layer);
-    }
-
-    @Override
-    public void onResponse(RequestCall call) {
-        List<PoiNode> nodes = (List<PoiNode>) call.getData();
-        mMapBoxHelper.addChild(PoiNodeLayer.createPoiNodeLayer(call.url(), nodes));
-    }
-
-    @Override
-    public void onResponseErr(RequestCall call, IHttpRequester.RepErrMsg msg) {
-
     }
 
     private class MapBoxHelper extends SpMapBoxHelper {

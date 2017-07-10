@@ -3,15 +3,10 @@ package com.singpals.mapbox;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-import com.mapbox.application.SingpalsApplication;
+import com.singpals.manager.gaea.GaeaManager;
 import com.singpals.manager.net.INetManager;
-
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.RuntimePermissions;
 
 
 /**
@@ -21,10 +16,10 @@ import permissions.dispatcher.RuntimePermissions;
 public class BaseActivity<T extends IBaseActPresenter> extends Activity {
 
     protected T mPresenter;
-    protected INetManager mNetManager = INetManager.Factory.getNetManager();
 
-    public INetManager getNetManager() {
-        return mNetManager;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     /**

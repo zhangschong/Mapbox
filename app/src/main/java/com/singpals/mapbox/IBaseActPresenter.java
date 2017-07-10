@@ -39,11 +39,9 @@ public interface IBaseActPresenter<T extends BaseActivity> {
     abstract class BaseActPresenter<T extends BaseActivity> implements IBaseActPresenter<T> {
         protected SparseArray<View> mViews = new SparseArray<>(20);
         protected T mActivity;
-        protected INetManager mNetManager;
         @Override
         public final void setActivity(T activity, Bundle savedInstanceState) {
             mActivity = activity;
-            mNetManager = activity.getNetManager();
             onActivityCreated(activity, savedInstanceState);
         }
 
