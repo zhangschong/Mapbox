@@ -113,7 +113,7 @@ class MapActPresenter extends BaseMapActPresenter<MapActivity> {
         mMapBoxHelper.cameraTo(29.50, 106.72, 10, 5000);
         mPoiManager.requestPoiNodes().observer(new GaeaItemCb.Observer<List<PoiNode>>() {
             @Override
-            public void onDataUpdated(List<PoiNode> data) {
+            public void onDataUpdated(int dataType, List<PoiNode> data) {
                 mMapBoxHelper.addChild(PoiNodeLayer.createPoiNodeLayer("PoiNodes", data));
             }
         });

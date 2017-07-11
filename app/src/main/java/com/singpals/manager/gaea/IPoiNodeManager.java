@@ -39,7 +39,7 @@ class PoiNodeManager extends GaeaManagerItem implements IPoiNodeManager {
             @MethodTag(threadType = IMethodDone.THREAD_TYPE_THREAD)
             public void onResponse(RequestCall<List<PoiNode>> call) {
                 List<PoiNode> nodes = call.getData();
-                cb.dataUpdated(nodes);
+                cb.dataUpdated(GaeaItemCb.DATA_TYPE_NET, nodes);
             }
 
             @Override
