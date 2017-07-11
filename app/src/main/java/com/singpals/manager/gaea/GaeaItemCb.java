@@ -3,7 +3,7 @@ package com.singpals.manager.gaea;
 import static com.lib.mthdone.IMethodDone.Factory.MethodDone;
 
 /**
- * $desc
+ * 用于数据返回控制器
  */
 
 public class GaeaItemCb<T> {
