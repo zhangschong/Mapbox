@@ -50,7 +50,7 @@ class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> i
 
     @Override
     protected void onActivityCreated(LoginActivity activity, Bundle savedInstanceState) {
-        activity.setContentView(R.layout.user_login);
+        activity.setContentView(R.layout.sp_user_login);
 
         TextView number = findViewById(R.id.et_phone_number);
         TextView psw = findViewById(R.id.et_psw);

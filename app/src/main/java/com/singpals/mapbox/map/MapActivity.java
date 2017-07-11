@@ -2,26 +2,18 @@ package com.singpals.mapbox.map;
 
 import android.Manifest;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.lib.data.kml.SpKmlLayer;
-import com.lib.http.IHttpRequester;
-import com.lib.http.RequestCall;
 import com.lib.mapbox.SpItem;
 import com.lib.mapbox.SpMapBoxHelper;
 import com.lib.utils.FileSource;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.services.android.telemetry.MapboxEvent;
-import com.mapbox.services.android.telemetry.MapboxTelemetry;
-import com.mapbox.services.android.telemetry.utils.TelemetryUtils;
-import com.mapbox.services.commons.geojson.Feature;
 import com.singpals.manager.gaea.GaeaItemCb;
 import com.singpals.manager.gaea.GaeaManager;
 import com.singpals.manager.gaea.IPoiNodeManager;
@@ -97,13 +89,16 @@ class MapActPresenter extends BaseMapActPresenter<MapActivity> {
 
     @Override
     protected void onActivityCreated(MapActivity activity, Bundle savedInstanceState) {
-        activity.setContentView(R.layout.map_layout);
-        setMapView((MapView) findViewById(R.id.mapView), savedInstanceState);
+        activity.setContentView(R.layout.sp_main_map);
+        setMapView((MapView) findViewById(R.id.mapview_map), savedInstanceState);
         mPoiManager = GaeaManager.getGaeaManager().getProxyInstance(IPoiNodeManager.class);
     }
 
     @Override
     public void onMapReady(MapboxMap mapboxMap) {
+
+        mMapView.setStyleUrl("mapbox://styles/mapbox/satellite-v9");
+
         mIconManager = new IconManager(mActivity, mapboxMap);
         mIconManager.init();
 
@@ -136,9 +131,9 @@ class MapActPresenter extends BaseMapActPresenter<MapActivity> {
         @Override
         public void addChild(SpItem child) {
             super.addChild(child);
-            if (child instanceof PoiNodeLayer) {
-                ((PoiNodeLayer) child).setOnPoiNodesClickedListener(mNodeClicker);
-            }
+//            if (child instanceof PoiNodeLayer) {
+//                ((PoiNodeLayer) child).setOnPoiNodesClickedListener(mNodeClicker);
+//            }
         }
 
         @Override

@@ -7,4 +7,8 @@
     <string name="txt_login">登录</string>
     <string name="txt_forget_psw">忘记密码?</string>
     <string name="txt_understand_sinpals">了解sinpals</string>
+    <string name="txt_map">地图</string>
+    <string name="txt_business">业务</string>
+    <string name="txt_new_data">新数据</string>
+    <string name="txt_filter">筛选</string>
 </resources>
