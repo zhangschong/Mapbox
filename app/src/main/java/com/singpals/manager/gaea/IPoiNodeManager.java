@@ -10,8 +10,6 @@ import com.singpals.manager.net.data.UserData;
 
 import java.util.List;
 
-import static com.lib.mthdone.IMethodDone.Factory.MethodDone;
-
 /**
  * $desc
  */
@@ -46,7 +44,7 @@ class PoiNodeManager extends GaeaManagerItem implements IPoiNodeManager {
             public void onResponseErr(RequestCall<List<PoiNode>> call, IHttpRequester.RepErrMsg msg) {
 
             }
-        }, mUserData.getUuid());
+        }, mUserData.getToken());
         return cb;
     }
 
@@ -64,7 +62,7 @@ class PoiNodeManager extends GaeaManagerItem implements IPoiNodeManager {
     @Override
     protected void onSetDataGaea(GaeaManager gaea) {
         mNetManager = gaea.getProxyInstance(INetManager.class);
-        mUserData = gaea.getProxyInstance(IUserManager.class).getUserData();
+        mUserData = gaea.getProxyInstance(IUserConfiguration.class).getUserData();
     }
 
 }

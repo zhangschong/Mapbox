@@ -1,7 +1,11 @@
 package com.singpals.manager.gaea;
 
+import android.content.Context;
+
 import com.lib.http.IHttpRequester;
 import com.lib.http.RequestCall;
+import com.lib.store.IClassStore;
+import com.lib.store.IStringStore;
 import com.singpals.manager.net.INetManager;
 import com.singpals.manager.net.data.UserData;
 
@@ -13,7 +17,7 @@ import static com.lib.mthdone.IMethodDone.Factory.MethodDone;
  * $desc
  */
 
-public interface IUserManager {
+public interface IUserConfiguration {
 
     UserData getUserData();
 
@@ -59,13 +63,19 @@ public interface IUserManager {
 /**
  * 默认的用户信息管理员
  */
-class UserManager extends GaeaManagerItem implements IUserManager {
+class UserConfiguration extends GaeaManagerItem implements IUserConfiguration {
 
     private UserData mUserData = new UserData();
 
     private HashSet<OnUserManagerWatcher> mUserManagerWatchers = new HashSet<>(12);
 
     private INetManager mNetManager;
+
+    private final IClassStore mClsStore;
+
+    UserConfiguration(Context context){
+        mClsStore = new IClassStore.ClsJsonStore(new IStringStore.SpStringStore(context,"UserConfiguration.sp"));
+    }
 
     @Override
     protected void onSetDataGaea(GaeaManager gaea) {
@@ -116,6 +126,7 @@ class UserManager extends GaeaManagerItem implements IUserManager {
         @Override
         public void onResponse(RequestCall<UserData> call) {
             mUserData.setUserData((UserData) call.getData());
+            mClsStore.store(mUserData);
             for (OnUserManagerWatcher watcher : mUserManagerWatchers) {
                 watcher.onUserLogin();
                 watcher.onUserDataUpdated(mUserData);
@@ -130,7 +141,10 @@ class UserManager extends GaeaManagerItem implements IUserManager {
 
     @Override
     public void init() {
-
+        UserData userData =mClsStore.get(UserData.class);
+        if(null != userData){
+            mUserData.setUserData(userData);
+        }
     }
 
     @Override

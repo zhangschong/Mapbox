@@ -17,8 +17,9 @@ public class GaeaManager extends DataGaea {
         mGaeaManager = new GaeaManager();
 
         mGaeaManager.addImpl(INetManager.class, INetManager.Factory.createMockReq(context));//添加网络请求管理员
-        mGaeaManager.addImpl(IUserManager.class, new UserManager());//添加用户信息管理员
-        mGaeaManager.addImpl(IPoiNodeManager.class,new PoiNodeManager());//添加Poi点管理员
+        mGaeaManager.addImpl(IAppConfiguration.class, new AppConfigration(context));//添加应用配置
+        mGaeaManager.addImpl(IUserConfiguration.class, new UserConfiguration(context));//添加用户信息管理员
+        mGaeaManager.addImpl(IPoiNodeManager.class, new PoiNodeManager());//添加Poi点管理员
 
         mGaeaManager.init();
     }

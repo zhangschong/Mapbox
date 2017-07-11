@@ -29,7 +29,7 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MapActivity extends BaseMapActivity<MapActPresenter> {
+public class MainActivity extends BaseMapActivity<MapActPresenter> {
 
     private static final int REQUST_FILE_CODE = 101;
     public static final int REQUST_READ_PERMISSION = 102;
@@ -43,7 +43,7 @@ public class MapActivity extends BaseMapActivity<MapActPresenter> {
 
 
     void chooseFile() {
-        MapActivityPermissionsDispatcher.chooseFileInnerWithCheck(this);
+        MainActivityPermissionsDispatcher.chooseFileInnerWithCheck(this);
     }
 
 
@@ -78,17 +78,17 @@ public class MapActivity extends BaseMapActivity<MapActPresenter> {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MapActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }
 
-class MapActPresenter extends BaseMapActPresenter<MapActivity> {
+class MapActPresenter extends BaseMapActPresenter<MainActivity> {
     private MapBoxHelper mMapBoxHelper;
     private IconManager mIconManager;
     private IPoiNodeManager mPoiManager;
 
     @Override
-    protected void onActivityCreated(MapActivity activity, Bundle savedInstanceState) {
+    protected void onActivityCreated(MainActivity activity, Bundle savedInstanceState) {
         activity.setContentView(R.layout.sp_main_map);
         setMapView((MapView) findViewById(R.id.mapview_map), savedInstanceState);
         mPoiManager = GaeaManager.getGaeaManager().getProxyInstance(IPoiNodeManager.class);

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.mapbox.services.commons.utils.TextUtils;
 import com.singpals.manager.gaea.GaeaManager;
-import com.singpals.manager.gaea.IUserManager;
+import com.singpals.manager.gaea.IUserConfiguration;
 import com.singpals.manager.net.data.UserData;
-import com.singpals.mapbox.map.MapActivity;
+import com.singpals.mapbox.map.MainActivity;
 
 /**
  * Created by zhanghong on 17-7-3.
@@ -20,7 +20,7 @@ import com.singpals.mapbox.map.MapActivity;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> {
 
-    private IUserManager mUserManager = GaeaManager.getGaeaManager().getProxyInstance(IUserManager.class);
+    private IUserConfiguration mUserManager = GaeaManager.getGaeaManager().getProxyInstance(IUserConfiguration.class);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,13 +40,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
     }
 
     protected void startMapActivity() {
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
 }
 
-class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> implements IUserManager.OnUserManagerWatcher {
+class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> implements IUserConfiguration.OnUserManagerWatcher {
 
     @Override
     protected void onActivityCreated(LoginActivity activity, Bundle savedInstanceState) {
@@ -82,6 +82,7 @@ class LoginPresenter extends IBaseActPresenter.BaseActPresenter<LoginActivity> i
     @Override
     public void onUserLogin() {
         mActivity.startMapActivity();
+        mActivity.finish();
     }
 
     @Override

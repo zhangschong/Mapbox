@@ -90,6 +90,18 @@ public class FileMockRequester implements IHttpRequester {
         return null;
     }
 
+    protected String generateData(RequestCall call, Object callback, String data) {
+        return data;
+    }
+
+    protected final void err(RequestCall call, Object callback, int type, String msg) {
+        try {
+            MethodDone.doItWithException(callback, CALL_BACK_ERR, null, call, new RepErrMsg(type, msg));
+        } catch (Exception e) {
+            LogUtils.e(TAG, msg);
+        }
+    }
+
 
     @MethodTag(threadType = IMethodDone.THREAD_TYPE_IO)
     private void requestInner(Method method, MockRequestNode reqNode, Object callBack, Type dataCls, Object... params) throws IOException, InstantiationException, IllegalAccessException {
@@ -97,9 +109,12 @@ public class FileMockRequester implements IHttpRequester {
         reqNode.mResponse = response;
         MethodNode node = mMethodNodeControl.getMethodNode(response);
         if (null != node) {
-            Object data = GsonUtil.parserToJson(mGson, node.mData, dataCls);
-            response.setData(data);
-            MethodDone.doIt(callBack, CALL_BACK_SUCCEED, reqNode);
+            String sData = generateData(reqNode, callBack, node.mData);
+            if (!TextUtils.isEmpty(sData)) {
+                Object data = GsonUtil.parserToJson(mGson, sData, dataCls);
+                response.setData(data);
+                MethodDone.doIt(callBack, CALL_BACK_SUCCEED, reqNode);
+            }
         } else {
             response.setData(MockRequester.createClass(dataCls));
             MethodDone.doIt(callBack, CALL_BACK_SUCCEED, reqNode);

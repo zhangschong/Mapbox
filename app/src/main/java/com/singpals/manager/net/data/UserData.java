@@ -1,5 +1,7 @@
 package com.singpals.manager.net.data;
 
+import android.text.TextUtils;
+
 import com.lib.http.mock.MockRequester;
 
 /**
@@ -9,21 +11,21 @@ import com.lib.http.mock.MockRequester;
 public class UserData {
 
     @MockRequester.MockString("testUuid")
-    private String uuid;
+    private String token;
     @MockRequester.MockString("testName")
     private String userName;
 
     public void setUserData(UserData userData){
-        uuid = userData.uuid;
+        token = userData.token;
         userName = userData.userName;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getToken() {
+        return token;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUserName() {
@@ -32,5 +34,9 @@ public class UserData {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public boolean isLogin(){
+        return !TextUtils.isEmpty(token);
     }
 }
